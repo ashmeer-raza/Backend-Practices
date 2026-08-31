@@ -52,6 +52,16 @@ const App = () => {
     getAllNotes();
   }, []);
 
+  let deleteNote = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3000/notes/${id}`);
+      console.log(res);
+      await getAllNotes();
+    } catch (error) {
+      console.log("Error in get All notes API:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 px-4 py-10">
       <div className="mx-auto max-w-5xl">
@@ -124,7 +134,7 @@ const App = () => {
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {allNotes.map((note) => (
-              <NoteCard key={note._id} note={note} />
+              <NoteCard key={note._id} note={note} deleteNote={deleteNote} />
             ))}
           </div>
         )}

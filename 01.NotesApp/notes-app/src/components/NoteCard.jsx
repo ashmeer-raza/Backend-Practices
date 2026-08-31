@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, deleteNote }) => {
   return (
     <div className="group flex h-full flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 transition duration-200 hover:-translate-y-1 hover:shadow-lg">
       {/* Header */}
@@ -41,6 +41,7 @@ const NoteCard = ({ note }) => {
 
         <button
           type="button"
+          onClick={() => deleteNote(note._id)}
           className="flex-1 rounded-xl border border-red-100 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100"
         >
           🗑️ Delete
