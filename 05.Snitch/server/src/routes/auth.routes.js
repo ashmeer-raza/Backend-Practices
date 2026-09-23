@@ -6,5 +6,5 @@ const router = Router();
 /* // @route   POST /api/auth/register
  */
 
-router.post("/register", registerValidator, (req, res) => {
+router.post("/register", registerValidator);
 export default router;
