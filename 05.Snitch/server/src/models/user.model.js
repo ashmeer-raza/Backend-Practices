@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema({
     default: "user",
     enum: ["user", "seller"], //enum is used to restrict the values of the role field to either "user" or "seller"
   },
+  refreshToken: {
+    type: String,
+  },
 });
 
 const userModel = mongoose.model("User", userSchema);

@@ -14,3 +14,11 @@ export function createRefreshToken({ userId, role }) {
   });
   return refreshToken;
 }
+
+export function readRefreshToken(token) {
+  return jwt.verify(token, config.REFRESH_TOKEN_SECRET);
+}
+
+export function readAccessToken(token) {
+  return jwt.verify(token, config.ACCESS_TOKEN_SECRET);
+}
