@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { createProductValidator } from "../validators/product.valdator.js";
 
 const router = Router();
 
