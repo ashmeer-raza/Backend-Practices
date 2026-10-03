@@ -19,3 +19,12 @@ export function authenticate(req, res, next) {
     return res.status(401).json({ message: "Invalid access token or expired" });
   }
 }
+
+export async function authenticateSeller(req, res, next) {
+  if (!req.user || req.user.role !== "seller") {
+    return res.status(403).json({
+      message: "Only sellers can unlist products",
+    });
+  }
+  next();
+}

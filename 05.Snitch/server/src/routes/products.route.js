@@ -1,9 +1,19 @@
 import { Router } from "express";
-import { createProductValidator } from "../validators/product.valdator.js";
-import { authenticate } from "../middleware/auth.middleware.js";
+import {
+  createProductValidator,
+  unlistProductValidator,
+  listProductValidator,
+} from "../validators/product.valdator.js";
+import {
+  authenticate,
+  authenticateSeller,
+} from "../middleware/auth.middleware.js";
 import {
   createProduct,
   listAllProducts,
+  unlistProduct,
+  listProduct,
+  listAllProductsToSeller,
 } from "../controller/product.controller.js";
 import multer from "multer";
 
@@ -17,6 +27,7 @@ const upload = multer({
 
 const router = Router();
 
+// Create a new product
 router.post(
   "/",
 
@@ -24,14 +35,7 @@ router.post(
   authenticate,
 
   // check the role is seller or not
-  (req, res, next) => {
-    if (req.user.role !== "seller") {
-      return res.status(403).json({
-        message: "Only sellers can create products. user are not sellers.",
-      });
-    }
-    next();
-  },
+  authenticateSeller,
 
   // required for reading the data from the request body and validating it
   upload.array("images"),
@@ -49,5 +53,31 @@ router.post(
 
 // get all products
 router.get("/", authenticate, listAllProducts);
+
+// get all products for a seller
+router.get(
+  "/seller",
+  authenticate,
+  authenticateSeller,
+  listAllProductsToSeller,
+);
+
+// Unlist a product
+router.patch(
+  "/unlist/:id",
+  authenticate,
+  authenticateSeller,
+  unlistProductValidator,
+  unlistProduct,
+);
+
+// List a product
+router.patch(
+  "/list/:id",
+  authenticate,
+  authenticateSeller,
+  listProductValidator,
+  listProduct,
+);
 
 export default router;
