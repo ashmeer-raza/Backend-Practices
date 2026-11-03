@@ -14,13 +14,21 @@ const model = new ChatGroq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
+const message = []; // Messages (arr) is used to remember converation
+
 while (true) {
   const userInpurt = await readline.question("Write Somethings: ");
-  const stream = await model.stream([{ role: "user", content: userInpurt }]); // stream is used for the giving the response in the chunks...
+  message.push({ role: "user", content: userInpurt });
 
-  for await (const chunks of stream) {
-    process.stdout.write(chunks.content);
+  const stream = await model.stream(message); // stream is used for the giving the response in the chunks...
+
+  let aimessage = "";
+  for await (const chunk of stream) {
+    aimessage += chunk.content;
+    process.stdout.write(chunk.content);
   }
+
+  message.push({ role: "assistant", content: aimessage });
 
   process.stdout.write("\n");
 }
