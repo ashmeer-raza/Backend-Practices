@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 import { createInterface } from "node:readline/promises";
 import { tool, createAgent } from "langchain";
 import * as z from "zod";
-import { title } from "node:process";
 
 dotenv.config();
 
+// tool syntax => tool({},{})
 const createEventTool = tool(
   async function ({ date, title, description }) {
     events.push({
@@ -46,6 +46,7 @@ const readline = createInterface({
   output: process.stdout, //  output is used for the user to see the response.
 });
 
+// Select Model
 const model = new ChatGroq({
   model: "openai/gpt-oss-120b",
   apiKey: process.env.GROQ_API_KEY,
