@@ -1,8 +1,4 @@
 #!/usr/bin/env node
-import "dotenv/config";
-import os from "os";
-import path from "path";
+import main from "./src/main.js";
 
-const homedir = os.homedir();
-
-console.log(homedir);
+main();

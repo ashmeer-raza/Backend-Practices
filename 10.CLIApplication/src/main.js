@@ -1,7 +1,7 @@
-import { getSettings } from "./utils/settings.js";
+import { getSettingsFile } from "./utils/file.utils.js";
 
 async function main() {
-  const setting = await getSettings();
+  const setting = await getSettingsFile();
   console.log(setting);
 }
 
