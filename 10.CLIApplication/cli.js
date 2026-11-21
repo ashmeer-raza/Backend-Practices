@@ -1,3 +1,8 @@
 #!/usr/bin/env node
+import "dotenv/config";
+import os from "os";
+import path from "path";
 
-console.log("HI");
+const homedir = os.homedir();
+
+console.log(homedir);
