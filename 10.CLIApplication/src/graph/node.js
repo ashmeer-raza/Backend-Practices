@@ -1,6 +1,7 @@
 import { ChatGroq } from "@langchain/groq";
 import { getApiKey } from "../utils/file.utils.js";
 import { AIMessage } from "langchain";
+import { upserFilesTools } from "../ai/tools/files.tools.js";
 
 /**
  * Handle LLM node logic for the graph
@@ -10,10 +11,13 @@ import { AIMessage } from "langchain";
 
 export async function LLMNode(state) {
   const apiKey = await getApiKey();
+
   const model = new ChatGroq({
     model: "openai/gpt-oss-120b",
     apiKey,
   });
+
+  const modelWithTool = model.bindTools([upserFilesTools]);
 
   const stream = await model.stream(state.messages);
 
@@ -22,8 +26,8 @@ export async function LLMNode(state) {
   let aiMessage = "";
 
   for await (const chunk of stream) {
-    process.stdout.write(chunk.text);
-    aiMessage += chunk.text;
+    process.stdout.write(chunk.content);
+    aiMessage += chunk.content;
   }
   process.stdout.write("\n");
 

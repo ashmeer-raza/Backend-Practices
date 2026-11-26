@@ -65,8 +65,8 @@ export async function getApiKey() {
       apiKey: apiKey,
     };
   } catch (err) {
-      return {
-        error: "Invalid API key. Please set a valid API key using the CLI.",
-      };
+    return {
+      error: "Invalid API key. Please set a valid API key using the CLI.",
+    };
   }
 }
